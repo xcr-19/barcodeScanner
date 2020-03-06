@@ -20,6 +20,13 @@ export default function App() {
     })();
   }, []);
 
+  if (hasPermission === null) {
+    return <Text>Requesting for camera permission</Text>;
+  }
+  if (hasPermission === false) {
+    return <Text>No access to camera</Text>;
+  }
+
   const scannedBarCode = (isbn) => {
     let headers = {
       "Content-Type": 'application/json',
@@ -38,13 +45,11 @@ export default function App() {
           })
         }
         else {
-          throw "Object is not in the ISBN"
-          
+          throw error
         }
       })
       .catch(error => {
-        alert(error)
-          console.error('Error:', error)
+        alert("Object scanned is not in the ISBN datatbase. Error thrown:" + error)
       });
   }
 
@@ -55,12 +60,7 @@ export default function App() {
     scannedBarCode(isbn);
   };
 
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
-  }   
+
 
 
   return (
@@ -81,19 +81,19 @@ export default function App() {
             source={{ uri: state.selected.image}}
             style={{
               width: '100%',
-              height: 450
+              height: 500
             }}
             resizeMode="cover"
           />
           <Text style={styles.title}>{state.selected.title}</Text>
-          <Text style={styles.fonts}>Authors:{state.selected.authors}</Text>
-          <Text style={styles.fonts}>Binding Company:{state.selected.binding}</Text>
+          <Text style={styles.fonts}>Authors: {state.selected.authors}</Text>
+          <Text style={styles.fonts}>Binding: {state.selected.binding}</Text>
           <Text style={styles.fonts}>Date Published: {state.selected.date_published}</Text>
-          <Text style={styles.fonts}>ISBN 9:{state.selected.isbn}</Text>
-          <Text style={styles.fonts}>ISBN 13:{state.selected.isbn13}</Text>
-          <Text style={styles.fonts}>Language Written:{state.selected.language}</Text>
+          <Text style={styles.fonts}>ISBN 9: {state.selected.isbn}</Text>
+          <Text style={styles.fonts}>ISBN 13: {state.selected.isbn13}</Text>
+          <Text style={styles.fonts}>Language: {state.selected.language}</Text>
           <Text style={styles.fonts}>Total Pages: {state.selected.pages}</Text>
-          <Text style={styles.fonts}>Maximum Retail Price :{state.selected.msrp}</Text>
+          <Text style={styles.fonts}>MSRP: {state.selected.msrp}</Text>
 
 
           <TouchableHighlight
@@ -120,17 +120,17 @@ const styles = StyleSheet.create({
   },
   title:{
     color: '#000',
-    fontSize: 27,
-    fontWeight: '700',
+    fontSize: 25,
+    fontWeight: '500',
     textAlign: "center",
     marginBottom: 5,
     padding: 5
   },
   closeBtn: {
-    padding: 20,
+    padding: 10,
     fontSize: 20,
     color: '#ffffff',
-    fontWeight: '700',
+    fontWeight: '500',
     backgroundColor: '#000000',
     textAlign: "center"
   },
