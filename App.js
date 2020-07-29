@@ -49,7 +49,7 @@ export default function App() {
         }
       })
       .catch(error => {
-        alert("Object scanned is not in the ISBN datatbase. Error thrown:" + error)
+        alert("Object scanned is not in the ISBN datatbase")
       });
   }
 
@@ -61,15 +61,15 @@ export default function App() {
   };
 
 
-
-
   return (
     <View style={styles.container}>
       <BarCodeScanner
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={styles.scanningArea}
       />
-      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} 
+        // style={styles.scanAgainBtn}
+      />}
       <Modal
        animationType="fade"
       transparent={false}
@@ -142,7 +142,16 @@ const styles = StyleSheet.create({
   },
   scanningArea: {
     width: "100%",
-    height:"75%",
+    height:"80%",
     alignContent: "center"
   }
+  
+  // scanAgainBtn: {
+  //   padding: 10,
+  //   fontSize: 20,
+  //   color: '#ffffff',
+  //   fontWeight: '500',
+  //   backgroundColor: '#000000',
+  //   textAlign: "center"
+  // }
 });
